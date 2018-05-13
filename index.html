@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+
+<!-- I planned this out with JQuery in mind and then realized....this is a JS assignment.  -->
+<!-- Essentially, I put bunttons in that I didn't know how to call with only JS -->
+<!-- I also had intentions of my word bank to change the letter color to red once it was used -->
+<!-- I could seem to get this to work with only JS though :( -->
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>SharkNado!</title>
+    <!-- icon title -->
+    <link rel="shortcut icon" type="image/x-icon" href="http://icons.iconarchive.com/icons/cjdowner/cryptocurrency/512/MonaCoin-icon.png"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Added a link to Bootstrap-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Bootstrap File -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+    <!-- Modifying sheets -->
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/style.css" />
+
+</head>
+
+<body>
+    <header>
+        <h1 id="nombre">Aaron Escamilla</h1>
+
+        <nav>
+            <!-- Navigation bar-->
+            <a href="index.html">About</a> |
+            <a href="portfolio.html">Portfolio</a> |
+            <a id="current" href="contact.html">Contact</a>
+        </nav>
+    </header>
+    <!-- Jumbotron for Title -->
+    <div class="jumbotron">
+        <h1 class="text-center">Shark Defense</h1>
+        <h3 class="text-center">Fight Off the Sharks!</h3>
+        <h3 class="text-center">This sharky is only 5 wrong guesses away!</h3>
+    </div>
+
+    <div class="row">
+        <!-- Choose a topic! -->
+        <div class="col-lg-2 card">
+            <h4 class="text-center card-header">Topic </h4>
+            <div class="card-body">
+                <div class="text-center">
+                    <button class="btn btn-info btn-lg" onclick="csButton()">
+                        <span class="fa fa-anchor"></span> CS Pirates!</button>
+                    <button class="btn btn-info btn-lg" onclick="foodButton()">
+                        <span class="fa fa-cutlery"></span> Hungry Arr!</button>
+                    <button class="btn btn-info btn-lg" onclick="seaButton()">
+                        <span class="fa fa-life-buoy"></span> Sea Shark!</button>
+                </div>
+            </div>
+        </div>
+        <!-- Middle section where Word Guessing occurs -->
+        <div class="col-lg-8 card">
+            <h4 class="text-center card-header">Shark Attack!</h4>
+            <div class="row">
+                <div class="col-lg-4">
+                    <!-- Initial Shark Image -->
+                    <img src="assets/images/shark_cover.png" alt="" id="imageid" class="img-thumbnail shark-game">
+                </div>
+                <div class="col-lg-8 text-center blankWord">
+                    <!-- This is where the word is posted -->
+                </div>
+            </div>
+        </div>
+        <!-- Word Bank...will populate with JS -->
+        <div class="col-lg-2 card">
+            <h4 class="text-center card-header">Letter Bank </h4>
+            <div class="letterBank"></div>
+        </div>
+    </div>
+
+    <!-- ***************************************************************************** -->
+    <!-- // Let's get java scripting! -->
+
+    <script type="text/javascript">
+        /*
+                We declare variable first. 
+        */
+        // Create alphabet letters
+        var letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+        // Create Arrays letters
+        // There are eleven words per
+        var vocabList = {
+            csVocab: ["javascript", "jquery", "html", "bootstrap", "class", "loop", "string", "boolean", "double", "div", "binary"],
+            hunger: ["shark", "steak", "sword", "fish", "shrimp", "saute", "seagull", "fork", "knife", "fire", "salt"],
+            sea: ["whale", "greenland", "tiger", "hammerhead", "frilled", "basking", "goblin", "lemon", "blue", "sand", "blacktip"],
+        }
+
+        // for loop to create div's for word bank
+        for (var i = 0; i < letters.length; i++) {
+            //    This is Where we create the word bank
+            var letterBtn = document.createElement("div");
+            document.querySelector(".letterBank").appendChild(letterBtn);
+            letterBtn.innerHTML += letters[i];
+            letterBtn.style.float = "left";
+            letterBtn.style.padding = "4px";
+            letterBtn.style.color = "black";
+            letterBtn.id = letters[i];
+        }
+        // Let's put a word out there
+
+        // function csButton() {
+        //     randomWord = vocabList.csVocab[Math.floor(Math.random() * vocabList.csVocab.length)];
+
+        // }
+        // function foodButton() {
+        //     randomWord = vocabList.hunger[Math.floor(Math.random() * vocabList.hunger.length)];
+
+        // }
+        // function seaButton() {
+        //     randomWord = vocabList.sea[Math.floor(Math.random() * vocabList.sea.length)];
+        // }
+        // console.log(randomWord);
+        // Populating the middle section with headers etc. 
+        var headerword = document.createElement("h3");
+        document.querySelector(".blankWord").appendChild(headerword);
+        headerword.innerHTML = "Mystery Word:";
+        headerword.style.padding = "5px";
+
+        // Post random word
+        var randomWord = "";
+        var wordInvisible = [];
+        var guessLeft = 5;
+
+
+        var wordGuess = document.createElement("h4");
+        document.querySelector(".blankWord").appendChild(wordGuess);
+        wordGuess.style.padding = "5px";
+
+
+        // Header Guesses left
+        var headerguess = document.createElement("h3");
+        document.querySelector(".blankWord").appendChild(headerguess);
+        headerguess.innerHTML = "Guess Left:";
+        headerguess.style.padding = "5px";
+
+        // # Guesses left
+        var countguess = document.createElement("h4");
+        document.querySelector(".blankWord").appendChild(countguess);
+        countguess.style.padding = "5px";
+
+
+        function startGame() {
+            randomWord = vocabList.sea[Math.floor(Math.random() * vocabList.sea.length)];
+            console.log(randomWord);
+            guessLeft = 5;
+            wordInvisible = [];
+            wordInvisible = randomWord.split();
+            for (var i = 0; i < randomWord.length; i++) {
+                wordInvisible[i] = (" _ ");
+            }
+            countguess.innerHTML = guessLeft;
+            wordGuess.innerHTML = wordInvisible;
+        }
+        // Let's get started
+        startGame();
+
+        // Capture User Key stroke
+        document.onkeyup = function (event) {
+            var letter = event.key.toLowerCase();
+            // find the position of letters
+            function findLetter(randomWord, letter) {
+                var positions = [];
+                for (var i = 0; i < randomWord.length; i++) {
+                    if (randomWord.charAt(i) == letter) {
+                        positions.push(i);
+                    }
+                }
+                return positions;
+            }
+
+            var positionLet = []
+            // get the positions of letters
+            positionLet = findLetter(randomWord, letter);
+
+            for (var i = 0; i < positionLet.length; i++) {
+                wordInvisible[positionLet[i]] = letter;
+            }
+
+            // check if user guessed a letter
+            if (positionLet.length > 0) {
+                wordGuess.innerHTML = wordInvisible;
+                // I also struggled to think how to check if the person has won!
+                // I figured I could do a loop to go through and check for " _ "
+                var blanks = false;
+                for(var i = 0;i<wordInvisible.length;i++){
+
+                    if(wordInvisible[i]== " _ "){
+                        blanks = true;
+                    }
+                }
+                if(blanks === false){
+                    document.getElementById("imageid").src = "assets/images/youwin.jpg";
+                       if (confirm("Would you like to play again?")) {
+                        startGame();
+                    } else {
+                        document.write("Bye....you lost....");
+                    }
+                }
+
+            } else if (positionLet.length == 0) {
+                for (var i = 0; i < letters.length; i++) {
+                    if (letters[i] == letter) {
+                        // This is where I struggled to turn the used letter red and then 
+                        // I would write some if statements. I apprently made this too complicated...
+                        document.querySelector("#A").backgroundColor = "red";
+                    }
+                }
+
+                guessLeft -= 1;
+                countguess.innerHTML = guessLeft;
+
+                //check if user is losing 
+                if (guessLeft == 4) {
+                    document.getElementById("imageid").src = "assets/images/shark_start.png";
+                } else if (guessLeft == 3) {
+                    document.getElementById("imageid").src = "assets/images/shark_coming.png";
+                } else if (guessLeft == 1) {
+                    document.getElementById("imageid").src = "assets/images/shark_battle.png";
+                } else if (guessLeft == 0) {
+                    document.getElementById("imageid").src = "assets/images/youlose.png";
+                    if (confirm("Would you like to play again?")) {
+                        startGame();
+                    } else {
+                        document.write("Bye....you lost....");
+                    }
+                }
+            }
+
+        }
+    </script>
+</body>
+
+</html>

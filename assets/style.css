@@ -1,0 +1,113 @@
+/* This is the general CSS. You may see in other unique CSS style forms
+the same div calls. */
+
+
+html { /*This is to set the footer as fixed to the relative html and keep it at the bottom*/
+    position: relative;
+    min-height: 100%;
+
+}
+/*This is for the overall background of every page. 
+I put repeat so the image doesn't become pixelized or stretched. It will keep stamping*/
+body{ 
+    background:black;
+    background-repeat:repeat;
+}
+
+header{
+    background: #ffffff;
+    height: 50px;
+    border-bottom: 2px solid #cccccc;
+
+}
+    .blankword{
+        padding-top: 10px;
+    }
+    .shark-game{
+        width:250px;
+         height:200px;
+         margin-top:10px;
+         margin-bottom: 10px;
+    }
+    #nombre{
+        font-family: 'Georgia', Times,Times New Roman, serif;
+    }
+    nav,p{
+        font-family:'Arial', 'Helvetica Neue',Helvetica, sans-serif;
+    }
+    nav,#nombre{
+        /* Text attributes */
+        vertical-align: middle;
+        text-align:center;
+        line-height: 50px;
+    }
+    .btn{
+        margin-top:2px;
+        margin-bottom: 2px;
+    }
+    a{
+        color:grey;
+        text-decoration: none;
+    }
+    nav{
+        /* float orientation */
+        float: right;
+        margin-right:15%;
+    }
+    #nombre{
+        /* color styling text and box */
+        background:#4aaaa5;
+        color:#ffffff;
+        font-size:25px;
+        /* box attributes */
+        width:17%;
+        height: 50px;
+        /* float orientation */
+        float:left;
+        margin-left:15%;
+    }
+
+    p{
+        text-align: justify;
+        line-height: 25px;
+        font-size: 17px;
+        color:#777777;
+    }
+
+/* The footer will stay at the bottem. I made it fixed to the 100% span of the html page....I think? 
+it worked... */
+/* footer{
+    position: absolute;
+    color:#ffffff;
+    background:#666666;
+    left: 0;
+    bottom: 0;
+    height: 50px;
+    width: 100%;
+    text-align:center;
+    line-height: 50px;
+    border-top: 10px solid #4aaaa5;; 
+} */
+/* I didn't realize there were certain media query dimensions given...I just did what looked right */
+@media screen and (max-width: 600px) {
+    header{
+        height: 100px;
+        margin-bottom: 5px;
+    }
+    #nombre,nav{
+        width:100%; 
+    }
+    #nombre{
+
+        margin-left:0px;
+    }
+    nav{
+
+        border-bottom: 2px solid #cccccc;
+        margin-right:0px;
+
+    }
+
+  }
+
+  
